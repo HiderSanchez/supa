@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:id="@+id/cvEliminar"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/altura_tarjeta"
+    android:layout_alignParentRight="true"
+    card_view:cardCornerRadius="4dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    <!--linear de divisor de imagen e items-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Nombre"
+                android:id="@+id/txtNombre"
+                android:layout_weight="9.5"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_close"
+                android:background="@android:color/transparent"
+                android:id="@+id/btnEliminar"
+                android:layout_gravity="right"
+                android:layout_weight="0.5"/>
+
+
+
+        </LinearLayout>
+
+        <!--linear de imagen-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imagenProducto"
+                android:layout_width="165dp"
+                android:layout_height="165dp"
+                android:scaleType="centerCrop"/>
+
+
+            <!--linear de items-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="165dp"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                >
+
+                <!--nombre-->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Marca"
+                    android:id="@+id/txtMarca" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Categoria"
+                    android:id="@+id/txtCategoria" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="S/.  "
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Precio"
+                        android:id="@+id/txtPrecio" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Color"
+                    android:id="@+id/txtColor" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!--linear de stock cantidad y boton-->
+        <LinearLayout
+            android:gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Stock"
+                android:id="@+id/txtStock"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                />
+
+            <EditText
+                android:layout_width="104dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:id="@+id/txtCantidad"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/btnComprar"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/ic_shopping_cart"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+</android.support.v7.widget.CardView>
