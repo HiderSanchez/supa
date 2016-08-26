@@ -2,9 +2,11 @@ package com.sise.titulacion.anypsa.fragmentos;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,9 @@ import com.sise.titulacion.anypsa.adaptadores.HistorialAdapter;
 import com.sise.titulacion.anypsa.controladores.HistorialResponse;
 import com.sise.titulacion.anypsa.deserializador.DeserializadorHistorial;
 import com.sise.titulacion.anypsa.utils.Constantes;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,16 +55,33 @@ public class HistorialPedidos extends Fragment {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-
-                                GsonBuilder gsonBuilder = new GsonBuilder();
-                                gsonBuilder.registerTypeAdapter(HistorialResponse.class, new DeserializadorHistorial());
-                                Gson gson = gsonBuilder.create();
-                                HistorialResponse historialResponse = gson.fromJson(response.toString(), HistorialResponse.class);
-                                for (int i = 0; i < historialResponse.getHistorials().size(); i++) {
-                                    System.out.println(historialResponse.getHistorials().get(i).toString());
+                                int status = -1;
+                                String msj="";
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    status = (int) jsonObject.get("status");
+                                    msj=jsonObject.get("message").toString();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                                HistorialAdapter productoAdaptador = new HistorialAdapter(historialResponse.getHistorials());
-                                recyclerView.setAdapter(productoAdaptador);
+                                Log.d("log",String.valueOf(status));
+
+                                //  JsonObject object = new JsonObject(response.toString());
+
+                                //     int status = object.get("status").getAsInt();
+                                if (status <=0) {
+                                    Snackbar.make(getView(),msj,Snackbar.LENGTH_LONG).show();
+                                }else {
+                                    GsonBuilder gsonBuilder = new GsonBuilder();
+                                    gsonBuilder.registerTypeAdapter(HistorialResponse.class, new DeserializadorHistorial());
+                                    Gson gson = gsonBuilder.create();
+                                    HistorialResponse historialResponse = gson.fromJson(response.toString(), HistorialResponse.class);
+                                    for (int i = 0; i < historialResponse.getHistorials().size(); i++) {
+                                        System.out.println(historialResponse.getHistorials().get(i).toString());
+                                    }
+                                    HistorialAdapter productoAdaptador = new HistorialAdapter(historialResponse.getHistorials());
+                                    recyclerView.setAdapter(productoAdaptador);
+                                }
                             }
                         },
                         new Response.ErrorListener() {
@@ -73,7 +95,7 @@ public class HistorialPedidos extends Fragment {
                     protected Map<String, String> getParams() {
                         Map<String, String> headers = new HashMap<String, String>();
                         headers.put("action", "listpedidos");
-                        headers.put("idcliente", "1");
+                        headers.put("idclient", "1");
                         return headers;
                     }
                 };

@@ -1,12 +1,5 @@
 package com.sise.titulacion.anypsa.entidades;
 
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Creado por Luis Negrón el 22/08/16.
- * Email lann8605@gmail.com
- */
 public class DetallePedido {
     private int idcolor;
     private int idProducto;

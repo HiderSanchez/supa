@@ -47,7 +47,7 @@ public class PedidoAdaptador extends RecyclerView.Adapter<PedidoAdaptador.Pedido
     }
 
     @Override
-    public void onBindViewHolder(PedidoViewHolder pedidoViewHolder, int position) {
+    public void onBindViewHolder(final PedidoViewHolder pedidoViewHolder, final int position) {
 
         //recorre y setea cada elemento
         final Producto producto = productos.get(position);
@@ -77,6 +77,10 @@ public class PedidoAdaptador extends RecyclerView.Adapter<PedidoAdaptador.Pedido
             @Override
             public void onClick(View v) {
                 Estaticos.carritoProductos.remove(producto);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,Estaticos.carritoProductos.size());
+                Toast.makeText(v.getContext(),"Producto Eliminado",Toast.LENGTH_SHORT).show();
+
             }
         });
     }

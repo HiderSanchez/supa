@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.entidades.Color;
@@ -106,6 +107,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
                 producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
                 producto.setColorId(catalgoViewHolder.colorId);
                 itemProducto = producto;
+                Toast.makeText(view.getContext(),"producto agregado",Toast.LENGTH_SHORT).show();
 
                 Estaticos.carritoProductos.add(itemProducto);
                 EventBus.getDefault().post(new Mensajes("Mis Compras ("+String.valueOf(Estaticos.carritoProductos.size())+" producto )"));
