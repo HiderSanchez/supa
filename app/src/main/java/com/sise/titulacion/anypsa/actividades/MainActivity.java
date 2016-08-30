@@ -1,4 +1,4 @@
-package com.sise.titulacion.anypsa.ui;
+package com.sise.titulacion.anypsa.actividades;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,13 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.sise.titulacion.anypsa.R;
-import com.sise.titulacion.anypsa.entidades.Mensajes;
 import com.sise.titulacion.anypsa.fragmentos.Catalogo;
 import com.sise.titulacion.anypsa.fragmentos.HistorialPedidos;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,10 +27,8 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //todo verificar el snackbar; cambiar el texto del boton de eliminar pedido
-        //todo agregar boton enviar pedido en cardviewwliminar
+
         //todo ventanas emergentes para el tipo de pago http://es.androids.help/q1940
-        //todo se omite el tema de confirmar contraseñas
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,6 +39,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Catalogo catalogo = new Catalogo();
+        fragmentTransaction.replace(R.id.contenedor, catalogo).commit();
+        toolbar.setTitle(" Realizar Pedido");
     }
 
     @Override

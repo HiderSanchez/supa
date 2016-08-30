@@ -30,6 +30,7 @@ import com.sise.titulacion.anypsa.utils.Constantes;
  * {@link CatalogoFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
+@Deprecated
 public class CatalogoFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
@@ -94,7 +95,7 @@ public class CatalogoFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
+
         void onFragmentInteraction(Uri uri);
     }
 

@@ -30,7 +30,8 @@ public class Constantes {
      */
     public static final String login = IP  + "/login.php";
     public static final String catalogo = IP + "/list_products.php";
-    public static final String HISTORIAL = IP + "/pedido.php";
+    public static final String PEDIDO_PHP = IP + "/pedido.php";
+ //   public static String enviarPedido
 
     public static boolean compruebaConexion(Context context) {
 

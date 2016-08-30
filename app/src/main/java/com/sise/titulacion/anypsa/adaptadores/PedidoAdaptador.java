@@ -2,6 +2,7 @@ package com.sise.titulacion.anypsa.adaptadores;
 
 import android.content.Context;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,11 +52,10 @@ public class PedidoAdaptador extends RecyclerView.Adapter<PedidoAdaptador.Pedido
 
         //recorre y setea cada elemento
         final Producto producto = productos.get(position);
-      //  pedidoViewHolder.txtMarca.setText(producto.getMarca());
-      //  pedidoViewHolder.txtCategoria.setText(producto.getCategoria());
+
         pedidoViewHolder.txtNombre.setText(producto.getMarca()+" "+ producto.getCategoria()+" "+producto.getNombre());
         //carga imagen al imageView
-        Uri uri = Uri.parse(producto.getImagen());
+
         Context context = pedidoViewHolder.imagenProducto.getContext();
         Picasso.with(context).load(producto.getImagen()).into(pedidoViewHolder.imagenProducto);
         //termina carga de imagen
@@ -69,18 +69,19 @@ public class PedidoAdaptador extends RecyclerView.Adapter<PedidoAdaptador.Pedido
             color.setHexadecimal(producto.getColores().get(i).getHexadecimal());
 
         }
-       //  color = producto.getColores().get(producto.getColorId());
-        pedidoViewHolder.txtPrecio.setText(color.getPrecio().toString());
-        pedidoViewHolder.txtCantidad.setText(String.valueOf( producto.getCantidad()));
+        pedidoViewHolder.txtPrecio.setText("Precio : "+color.getPrecio().toString());
+        pedidoViewHolder.txtCantidad.setText("Cantidad : "+String.valueOf( producto.getCantidad()));
+        pedidoViewHolder.txtStock.setText("Stock : "+String.valueOf(color.getStock()));
         pedidoViewHolder.txtColor.setBackgroundColor(android.graphics.Color.parseColor(color.getHexadecimal()));
+
+        //  ELIMINAR UN PRODUCTO DEL CARRITO
         pedidoViewHolder.btnEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Estaticos.carritoProductos.remove(producto);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position,Estaticos.carritoProductos.size());
-                Toast.makeText(v.getContext(),"Producto Eliminado",Toast.LENGTH_SHORT).show();
-
+                Snackbar.make(v,"Producto Eliminado",Snackbar.LENGTH_LONG).show();
             }
         });
     }
@@ -101,7 +102,7 @@ public class PedidoAdaptador extends RecyclerView.Adapter<PedidoAdaptador.Pedido
         private ImageView txtColor;
         private TextView txtStock;
         private Spinner cmbColor;
-        private EditText txtCantidad;
+        private TextView txtCantidad;
         private ImageButton btnComprar;
         private ImageButton btnEliminar;
 
@@ -116,7 +117,7 @@ public class PedidoAdaptador extends RecyclerView.Adapter<PedidoAdaptador.Pedido
             txtPrecio = (TextView) itemView.findViewById(R.id.tvPrecio);
             txtColor = (ImageView) itemView.findViewById(R.id.ivColor);
             txtStock = (TextView) itemView.findViewById(R.id.tvStock);
-            txtCantidad = (EditText) itemView.findViewById(R.id.txtCantidad);
+            txtCantidad = (TextView) itemView.findViewById(R.id.tvcatidad);
         //    btnComprar = (ImageButton) itemView.findViewById(R.id.btnComprar);
             btnEliminar = (ImageButton) itemView.findViewById(R.id.ibEliminar);
         //    cmbColor = (Spinner) itemView.findViewById(R.id.spinnerColores);

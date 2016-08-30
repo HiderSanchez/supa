@@ -1,9 +1,10 @@
-package com.sise.titulacion.anypsa.ui;
+package com.sise.titulacion.anypsa.actividades;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -34,6 +35,7 @@ public class LoginActivity extends AppCompatActivity{
     TextView txtPassword;
     Button btnEnviar;
     RequestQueue requestQueue;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,9 @@ public class LoginActivity extends AppCompatActivity{
         txtUsuario = (AutoCompleteTextView) findViewById(R.id.txtUsuario);
         txtPassword = (TextView) findViewById(R.id.txtPassword);
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
-
+        toolbar= (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("Anypsa Iniciar Sesion");
         requestQueue = Volley.newRequestQueue(this);
 
     }

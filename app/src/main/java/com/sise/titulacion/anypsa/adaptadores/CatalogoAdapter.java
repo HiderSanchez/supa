@@ -1,6 +1,7 @@
 package com.sise.titulacion.anypsa.adaptadores;
 
 import android.content.Context;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -88,9 +89,9 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
 
                             catalgoViewHolder.tvPrecio.setText("Precio: S/. "+color.getPrecio().toString());
 
-                            catalgoViewHolder.tvStock.setText("Stock en Unidades: "+ String.valueOf(color.getStock()));
+                            catalgoViewHolder.tvStock.setText("Stock : "+ String.valueOf(color.getStock()));
 
-                            catalgoViewHolder.tvMedida.setText(String.valueOf("5 Galones"));
+                       //     catalgoViewHolder.tvMedida.setText(String.valueOf("5 Galones"));
 
                         }
                     }
@@ -103,11 +104,11 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
             @Subscribe(threadMode = ThreadMode.MAIN)
             @Override
             public void onClick(View view) {
-                Producto itemProducto = new Producto();
+                Producto itemProducto;
                 producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
                 producto.setColorId(catalgoViewHolder.colorId);
                 itemProducto = producto;
-                Toast.makeText(view.getContext(),"producto agregado",Toast.LENGTH_SHORT).show();
+                Snackbar.make(view,"Producto Agregado",Snackbar.LENGTH_LONG).show();
 
                 Estaticos.carritoProductos.add(itemProducto);
                 EventBus.getDefault().post(new Mensajes("Mis Compras ("+String.valueOf(Estaticos.carritoProductos.size())+" producto )"));

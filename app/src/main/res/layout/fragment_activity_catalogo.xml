@@ -8,7 +8,8 @@
        android:id="@+id/rvCatalogo"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:layout_above="@+id/button" />
+       android:layout_alignParentTop="true"
+       android:layout_above="@+id/btnMisCompras" />
 
    <Button
        android:layout_width="match_parent"

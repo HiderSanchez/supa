@@ -1,16 +1,20 @@
 package com.sise.titulacion.anypsa.adaptadores;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.entidades.Historial;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by hider on 25/08/16.
@@ -31,8 +35,8 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
     }
 
     @Override
-    public void onBindViewHolder(HistorialViewHolder historialViewHolder, int position) {
-        Historial historial = historials.get(position);
+    public void onBindViewHolder(HistorialViewHolder historialViewHolder, final int position) {
+        final Historial historial = historials.get(position);
         historial.pintarEstadoPedido();
         historial.convertirFecha();
         historialViewHolder.tvEstadoProceso.setText("Estado de su pedido : " + historial.getEstado());
@@ -41,7 +45,15 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
         historialViewHolder.tvIdPedido.setText(String.valueOf("Pedido N° : " + historial.getIdPedido()));
         historialViewHolder.tvMonto.setText(String.valueOf(historial.getIgv() + historial.getSubTotal()));
         historialViewHolder.tvPagado.setText(historial.getPagado());
+
         historialViewHolder.layout.setBackgroundColor(android.graphics.Color.parseColor(historial.pintarEstadoPedido()));
+        historialViewHolder.tvIdPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo implemtar onclick
+
+            }
+        });
     }
 
     @Override
@@ -57,7 +69,7 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
         TextView tvMonto;
         TextView tvPagado;
         TextView tvEstadoProceso;
-        LinearLayout layout;
+        CardView layout;
 
         public HistorialViewHolder(View v) {
             super(v);
@@ -67,7 +79,7 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
             tvMonto = (TextView) v.findViewById(R.id.tvMonto);
             tvPagado = (TextView) v.findViewById(R.id.tvPagado);
             tvEstadoProceso = (TextView) v.findViewById(R.id.tvEstadoProceso);
-            layout = (LinearLayout) v.findViewById(R.id.colorPedido);
+            layout = (CardView) v.findViewById(R.id.cvHistorial);
         }
     }
 }

@@ -51,7 +51,7 @@ public class HistorialPedidos extends Fragment {
         StringRequest jsonObjectRequest =
                 new StringRequest(
                         Request.Method.POST,
-                        Constantes.HISTORIAL,
+                        Constantes.PEDIDO_PHP,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
@@ -95,7 +95,7 @@ public class HistorialPedidos extends Fragment {
                     protected Map<String, String> getParams() {
                         Map<String, String> headers = new HashMap<String, String>();
                         headers.put("action", "listpedidos");
-                        headers.put("idclient", "1");
+                        headers.put("idcliente", "1");
                         return headers;
                     }
                 };

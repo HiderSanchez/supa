@@ -14,9 +14,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="150dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:src="@drawable/anypsa" />
+        android:src="@drawable/logologin" />
 
     <TextView
         android:id="@+id/nombre_usuario"

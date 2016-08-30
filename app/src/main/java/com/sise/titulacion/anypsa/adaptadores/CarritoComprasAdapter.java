@@ -40,7 +40,7 @@ public class CarritoComprasAdapter extends RecyclerView.Adapter<CarritoComprasAd
         Producto producto = productos.get(position);
       //  catalgoViewHolder.ivFoto.setImageResource(producto.getImagen());
         catalgoViewHolder.tvNombre.setText(producto.getNombre());
-        catalgoViewHolder.txtCantidad.setText("1");
+        catalgoViewHolder.txtCantidad.setText(String.valueOf(producto.getCantidad()));
        final ArrayList<Color> colors = new ArrayList<>();
         for (int i = 0; i < producto.getColores().size(); i++) {
             colors.add(producto.getColores().get(i));
@@ -64,7 +64,7 @@ public class CarritoComprasAdapter extends RecyclerView.Adapter<CarritoComprasAd
 
                            catalgoViewHolder.ivColor.setBackgroundColor(android.graphics.Color.parseColor(color.getHexadecimal()));
                             catalgoViewHolder.tvPrecio.setText("Precio: S/. "+color.getPrecio().toString());
-                            catalgoViewHolder.tvStock.setText("Stock en Unidades: "+ String.valueOf(color.getStock()));
+                            catalgoViewHolder.tvStock.setText("Stock: "+ String.valueOf(color.getStock()));
                             catalgoViewHolder.tvMedida.setText(String.valueOf("5 Galones"));
                         }
                     }
@@ -88,7 +88,7 @@ public class CarritoComprasAdapter extends RecyclerView.Adapter<CarritoComprasAd
         TextView tvMedida;
         TextView tvNombre;
         TextView tvcatidad;
-        TextInputEditText txtCantidad;
+        TextView txtCantidad;
         ImageButton ibComprar;
 
 
@@ -102,7 +102,7 @@ public class CarritoComprasAdapter extends RecyclerView.Adapter<CarritoComprasAd
             tvMedida         = (TextView) v.findViewById(R.id.tvMedida);
             tvNombre         = (TextView) v.findViewById(R.id.tvNombre);
             tvcatidad        = (TextView) v.findViewById(R.id.tvcatidad);
-            txtCantidad      = (TextInputEditText) v.findViewById(R.id.txtCantidad);
+            txtCantidad      = (TextView) v.findViewById(R.id.tvcatidad);
             ibComprar        = (ImageButton) v.findViewById(R.id.ibComprar);
         }
     }
