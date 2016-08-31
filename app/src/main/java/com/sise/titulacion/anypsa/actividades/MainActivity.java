@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.fragmentos.Catalogo;
@@ -19,11 +20,16 @@ import com.sise.titulacion.anypsa.fragmentos.HistorialPedidos;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     Toolbar toolbar;
+    TextView tvUsuario;
+    TextView tvIdUsuario;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tvIdUsuario= (TextView) findViewById(R.id.tvNueroCliente);
+        tvUsuario= (TextView) findViewById(R.id.tvNombreUsuario);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -35,6 +41,11 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+        /*
+        String usuario= getIntent().getStringExtra("usuario");
+        String idusuario= getIntent().getStringExtra("idusuario");
+        tvUsuario.setText(usuario);
+        tvIdUsuario.setText(idusuario);*/
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);

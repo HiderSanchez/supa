@@ -1,10 +1,12 @@
 package com.sise.titulacion.anypsa.actividades;
 
 import android.content.Intent;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -54,7 +56,22 @@ public class LoginActivity extends AppCompatActivity{
 
     public void alClickearBoton(View v) {
         if (Constantes.compruebaConexion(this)) {
-            consultar();
+
+            if (!TextUtils.isEmpty(txtUsuario.getText())) {
+
+                if (!TextUtils.isEmpty(txtPassword.getText())) {
+
+                    consultar();
+                }else{
+                    txtPassword.requestFocus();
+                   txtPassword.setError("Ingrese una Contraseña");
+                }
+
+            }else{
+                txtUsuario.requestFocus();
+                txtUsuario.setError("Ingrese su Usuario");
+
+            }
         }else{
             Toast.makeText(getBaseContext(),"Verifica tu conexión a internet ", Toast.LENGTH_SHORT).show();
         }
@@ -70,25 +87,37 @@ public class LoginActivity extends AppCompatActivity{
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                JSONObject object = null;
+                                JSONObject object;
                                 try {
                                     object = new JSONObject(response);
 
-                                    //Toast.makeText(LoginActivity.this, object.get("user").toString(), Toast.LENGTH_LONG).show();
-                                    if(object.get("status").toString()!="0"){
-                                        Usuario usuario = new Usuario();
+                                    if(!object.get("status").toString().equals("0")){
+                                        Usuario usuario= new Usuario();
                                         usuario.setNombre(object.get("username").toString());
-                                        //Toast.makeText(LoginActivity.this,object.get("message").toString()+usuario.getNombre(), Toast.LENGTH_LONG).show();
-                                        Toast.makeText(LoginActivity.this,"Bienvenido "+usuario.getNombre(),Toast.LENGTH_LONG).show();
-
+                                        usuario.setIdusuario(Integer.parseInt(object.get("idusuario").toString()));
                                         Intent intent = new Intent(getApplication(), MainActivity.class);
+                                        intent.putExtra("usuario",usuario.getNombre());
+                                        intent.putExtra("idusuario",usuario.getIdusuario());
+
                                         startActivity(intent);
                                     }else{
-                                        Toast.makeText(LoginActivity.this, object.get("message").toString(), Toast.LENGTH_LONG).show();
+                                        Snackbar.make(
+                                                getWindow().getDecorView(),
+                                                object.get("message").toString(),
+                                                Snackbar.LENGTH_INDEFINITE)
+                                                .setAction("De Nuevo", new View.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(View view) {
+                                                        txtUsuario.requestFocus();
+                                                        txtUsuario.setSelectAllOnFocus(true);
+                                                    }
+                                                })
+                                                .setActionTextColor(getResources().getColor(R.color.colorAccent))
+                                                .show();
                                     }
 
                                 } catch (JSONException e) {
-                                    e.printStackTrace();
+                                    Snackbar.make(getWindow().getDecorView(),String.valueOf(e.toString()),Snackbar.LENGTH_SHORT).show();
                                 }
                             }
                         },

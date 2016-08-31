@@ -1,41 +1,33 @@
 package com.sise.titulacion.anypsa.adaptadores;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.entidades.Color;
-import com.sise.titulacion.anypsa.entidades.Pedido;
 import com.sise.titulacion.anypsa.entidades.Producto;
 import com.sise.titulacion.anypsa.utils.Estaticos;
 import com.squareup.picasso.Picasso;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Creado por Luis Negrón el 23/08/16.
  * Email lann8605@gmail.com
  */
-public class PedidoAdaptador extends RecyclerView.Adapter<PedidoAdaptador.PedidoViewHolder>{
+public class CarritoComprasAdaptador extends RecyclerView.Adapter<CarritoComprasAdaptador.PedidoViewHolder>{
 
     List<Producto> productos;
 
-    public PedidoAdaptador(List<Producto> productos) {
+    public CarritoComprasAdaptador(List<Producto> productos) {
         this.productos = productos;
     }
 

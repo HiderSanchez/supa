@@ -4,6 +4,10 @@ import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,11 +89,10 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
                        //     catalgoViewHolder.spinnerColores.setBackgroundColor(Integer.parseInt(color.getHexadecimal()));
 
                            catalgoViewHolder.ivColor.setBackgroundColor(android.graphics.Color.parseColor(color.getHexadecimal()));
-
-
                             catalgoViewHolder.tvPrecio.setText("Precio: S/. "+color.getPrecio().toString());
 
                             catalgoViewHolder.tvStock.setText("Stock : "+ String.valueOf(color.getStock()));
+                            catalgoViewHolder.txtCantidad.setText("1");
 
                        //     catalgoViewHolder.tvMedida.setText(String.valueOf("5 Galones"));
 
@@ -104,15 +107,23 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
             @Subscribe(threadMode = ThreadMode.MAIN)
             @Override
             public void onClick(View view) {
-                Producto itemProducto;
-                producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
-                producto.setColorId(catalgoViewHolder.colorId);
-                itemProducto = producto;
-                Snackbar.make(view,"Producto Agregado",Snackbar.LENGTH_LONG).show();
 
-                Estaticos.carritoProductos.add(itemProducto);
-                EventBus.getDefault().post(new Mensajes("Mis Compras ("+String.valueOf(Estaticos.carritoProductos.size())+" producto )"));
+                if (!TextUtils.isEmpty(catalgoViewHolder.txtCantidad.getText().toString()) || !catalgoViewHolder.txtCantidad.getText().toString().equals("0")) {
 
+                    Producto itemProducto;
+                    producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
+                    producto.setColorId(catalgoViewHolder.colorId);
+                    itemProducto = producto;
+                    Snackbar.make(view,"Producto Agregado",Snackbar.LENGTH_LONG).show();
+
+                    Estaticos.carritoProductos.add(itemProducto);
+                    EventBus.getDefault().post(new Mensajes("Mis Compras ("+String.valueOf(Estaticos.carritoProductos.size())+" producto )"));
+
+                }else{
+                    catalgoViewHolder.txtCantidad.setError("Ingrese la catidad a comprar");
+                    catalgoViewHolder.txtCantidad.requestFocus();
+
+                }
             }
         });
     }

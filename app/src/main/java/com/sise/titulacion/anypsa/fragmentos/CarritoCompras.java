@@ -19,7 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sise.titulacion.anypsa.R;
-import com.sise.titulacion.anypsa.adaptadores.PedidoAdaptador;
+import com.sise.titulacion.anypsa.adaptadores.CarritoComprasAdaptador;
 import com.sise.titulacion.anypsa.utils.Constantes;
 import com.sise.titulacion.anypsa.utils.Estaticos;
 
@@ -56,7 +56,7 @@ public class CarritoCompras extends Fragment {
     }
 
     void inicializarAdaptadorCarrritoCompras() {
-        PedidoAdaptador catalogoAdapter = new PedidoAdaptador(Estaticos.carritoProductos);
+        CarritoComprasAdaptador catalogoAdapter = new CarritoComprasAdaptador(Estaticos.carritoProductos);
         recyclerView.setAdapter(catalogoAdapter);
 
     }
@@ -72,7 +72,7 @@ public class CarritoCompras extends Fragment {
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
 
-                                    Estaticos.carritoProductos=null;
+                                //todo eliminar datos el la lista estatica
                                     Snackbar.make(getView(), jsonObject.get("message").toString(), Snackbar.LENGTH_LONG).show();
                                     Log.d("tag", "onResponse-header: "+jsonObject.get("message").toString());
                                     Log.d("tag", "onResponse-error: "+jsonObject.get("error").toString());
