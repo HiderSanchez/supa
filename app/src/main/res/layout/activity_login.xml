@@ -102,6 +102,7 @@
                 android:layout_marginTop="16dp"
                 android:onClick="alClickearBoton"
                 android:text="@string/action_sign_in"
+                android:background="@color/colorAccent"
                 android:textStyle="bold" />
 
         </LinearLayout>

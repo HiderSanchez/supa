@@ -29,7 +29,7 @@
 
                 <ImageView
                     android:id="@+id/ivFoto"
-                    android:layout_width="200dp"
+                    android:layout_width="160dp"
                     android:layout_height="150dp"
                     android:minHeight="200dp"
                     android:maxWidth="10dp"
@@ -101,23 +101,25 @@
                                 android:id="@+id/txtCantidad"
                                 />
 
+                    <!--        <android.support.design.widget.FloatingActionButton
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/ibComprar"
+                                android:src="@drawable/cart"
+                                />-->
                             <ImageButton
                                 android:id="@+id/ibComprar"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
                                 android:src="@drawable/cart"
                                 android:scaleType="centerInside"
-                                android:elevation="10dp"
+                                android:elevation="4dp"
+
                                 android:background="@android:color/transparent"/>
                         </LinearLayout>
                     </LinearLayout>
-
-
                 </LinearLayout>
-
             </LinearLayout>
-
-
             <TextView
                 android:id="@+id/tvNombre"
                 android:layout_width="match_parent"

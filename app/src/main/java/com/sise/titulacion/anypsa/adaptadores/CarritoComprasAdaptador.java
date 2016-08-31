@@ -63,7 +63,7 @@ public class CarritoComprasAdaptador extends RecyclerView.Adapter<CarritoCompras
         }
         pedidoViewHolder.txtPrecio.setText("Precio : "+color.getPrecio().toString());
         pedidoViewHolder.txtCantidad.setText("Cantidad : "+String.valueOf( producto.getCantidad()));
-        pedidoViewHolder.txtStock.setText("Stock : "+String.valueOf(color.getStock()));
+      //  pedidoViewHolder.txtStock.setText("Stock : "+String.valueOf(color.getStock()));
         pedidoViewHolder.txtColor.setBackgroundColor(android.graphics.Color.parseColor(color.getHexadecimal()));
 
         //  ELIMINAR UN PRODUCTO DEL CARRITO
@@ -108,7 +108,7 @@ public class CarritoComprasAdaptador extends RecyclerView.Adapter<CarritoCompras
       //      txtCategoria = (TextView) itemView.findViewById(R.id.tv);
             txtPrecio = (TextView) itemView.findViewById(R.id.tvPrecio);
             txtColor = (ImageView) itemView.findViewById(R.id.ivColor);
-            txtStock = (TextView) itemView.findViewById(R.id.tvStock);
+       //     txtStock = (TextView) itemView.findViewById(R.id.tvStock);
             txtCantidad = (TextView) itemView.findViewById(R.id.tvcatidad);
         //    btnComprar = (ImageButton) itemView.findViewById(R.id.btnComprar);
             btnEliminar = (ImageButton) itemView.findViewById(R.id.ibEliminar);

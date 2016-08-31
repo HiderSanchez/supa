@@ -29,9 +29,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * A login screen that offers login via email/password.
- */
 public class LoginActivity extends AppCompatActivity{
     AutoCompleteTextView txtUsuario;
     TextView txtPassword;
@@ -43,7 +40,6 @@ public class LoginActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         txtUsuario = (AutoCompleteTextView) findViewById(R.id.txtUsuario);
         txtPassword = (TextView) findViewById(R.id.txtPassword);
         btnEnviar = (Button) findViewById(R.id.btnEnviar);
@@ -51,7 +47,6 @@ public class LoginActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         toolbar.setTitle("Anypsa Iniciar Sesion");
         requestQueue = Volley.newRequestQueue(this);
-
     }
 
     public void alClickearBoton(View v) {
@@ -66,18 +61,14 @@ public class LoginActivity extends AppCompatActivity{
                     txtPassword.requestFocus();
                    txtPassword.setError("Ingrese una Contraseña");
                 }
-
             }else{
                 txtUsuario.requestFocus();
                 txtUsuario.setError("Ingrese su Usuario");
-
             }
         }else{
             Toast.makeText(getBaseContext(),"Verifica tu conexión a internet ", Toast.LENGTH_SHORT).show();
         }
-
     }
-
     public void consultar() {
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest jsonObjectRequest =
@@ -98,7 +89,6 @@ public class LoginActivity extends AppCompatActivity{
                                         Intent intent = new Intent(getApplication(), MainActivity.class);
                                         intent.putExtra("usuario",usuario.getNombre());
                                         intent.putExtra("idusuario",usuario.getIdusuario());
-
                                         startActivity(intent);
                                     }else{
                                         Snackbar.make(
@@ -136,10 +126,5 @@ public class LoginActivity extends AppCompatActivity{
                 };
         queue.add(jsonObjectRequest);
     }
-
-
-
-
-
 }
 
