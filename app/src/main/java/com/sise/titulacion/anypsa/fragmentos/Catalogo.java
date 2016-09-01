@@ -36,12 +36,15 @@ import org.greenrobot.eventbus.ThreadMode;
 public class Catalogo extends Fragment {
     RecyclerView recyclerView;
     Button button;
+    String idusuario;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activity_catalogo, container, false);
         button = (Button) view.findViewById(R.id.btnMisCompras);
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,6 +52,7 @@ public class Catalogo extends Fragment {
 
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
                     CarritoCompras carritoCompras = new CarritoCompras();
                     fragmentTransaction.replace(R.id.contenedor, carritoCompras).commit();
                     EventBus.getDefault().post(new Mensajes("Mi Lista de Compras"));

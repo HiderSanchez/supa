@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.fragmentos.Catalogo;
 import com.sise.titulacion.anypsa.fragmentos.HistorialPedidos;
+import com.sise.titulacion.anypsa.utils.Estaticos;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -41,15 +42,8 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        /*
-        String usuario= getIntent().getStringExtra("usuario");
-        String idusuario= getIntent().getStringExtra("idusuario");
-        tvUsuario.setText(usuario);
-        tvIdUsuario.setText(idusuario);*/
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -67,7 +61,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -77,12 +70,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -97,8 +86,6 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.solicitarpedido) {
-            // Handle the camera action
-
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             Catalogo catalogo = new Catalogo();
@@ -112,12 +99,14 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.replace(R.id.contenedor, catalogo).commit();
             toolbar.setTitle("Historial de Pedidos");
         } else if (id == R.id.informarpago) {
-
         } else if (id == R.id.ayuda) {
-
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 }

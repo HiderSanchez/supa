@@ -33,20 +33,16 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class CarritoCompras extends Fragment {
-
-    public CarritoCompras(){}
     Pedido pedido= Estaticos.cargarPedido();
     RecyclerView recyclerView;
     Button btnEnviarPedido;
     CarritoComprasAdaptador catalogoAdapter;
     TextView tvTotal;
-    ArrayList<DetallePedido> detallePedidos = new ArrayList<>();
 
     @Nullable
     @Override
@@ -68,7 +64,6 @@ public class CarritoCompras extends Fragment {
 
             }
         });
-
         return view;
     }
 
@@ -120,7 +115,7 @@ public class CarritoCompras extends Fragment {
 
                             Map<String, String> o = new HashMap<String, String>();
                             o.put("action", "newpedido");
-                            o.put("cliente", "1");
+                            o.put("cliente", Estaticos.idusuario);
                             o.put("subtotal", String.valueOf(pedido.getSubtotal()));
                             o.put("igv", String.valueOf(pedido.getIgv()));
                             for (int i = 0; i < pedido.getDetallePedido().size(); i++) {

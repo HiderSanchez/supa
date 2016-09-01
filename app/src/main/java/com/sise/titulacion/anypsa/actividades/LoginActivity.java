@@ -22,6 +22,7 @@ import com.android.volley.toolbox.Volley;
 import com.sise.titulacion.anypsa.entidades.Usuario;
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.utils.Constantes;
+import com.sise.titulacion.anypsa.utils.Estaticos;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -86,9 +87,8 @@ public class LoginActivity extends AppCompatActivity{
                                         Usuario usuario= new Usuario();
                                         usuario.setNombre(object.get("username").toString());
                                         usuario.setIdusuario(Integer.parseInt(object.get("idusuario").toString()));
+                                        Estaticos.idusuario=String.valueOf(usuario.getIdusuario());
                                         Intent intent = new Intent(getApplication(), MainActivity.class);
-                                        intent.putExtra("usuario",usuario.getNombre());
-                                        intent.putExtra("idusuario",usuario.getIdusuario());
                                         startActivity(intent);
                                     }else{
                                         Snackbar.make(
