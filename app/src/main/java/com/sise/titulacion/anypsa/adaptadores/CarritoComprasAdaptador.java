@@ -13,9 +13,13 @@ import android.widget.TextView;
 
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.entidades.Color;
+import com.sise.titulacion.anypsa.entidades.Pedido;
 import com.sise.titulacion.anypsa.entidades.Producto;
+import com.sise.titulacion.anypsa.entidades.Total;
 import com.sise.titulacion.anypsa.utils.Estaticos;
 import com.squareup.picasso.Picasso;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -68,12 +72,15 @@ public class CarritoComprasAdaptador extends RecyclerView.Adapter<CarritoCompras
 
         //  ELIMINAR UN PRODUCTO DEL CARRITO
         pedidoViewHolder.btnEliminar.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 Estaticos.carritoProductos.remove(producto);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position,Estaticos.carritoProductos.size());
-                Snackbar.make(v,"Producto Eliminado",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(v,"Producto Eliminado",Snackbar.LENGTH_SHORT).show();
+                Pedido pedido= Estaticos.cargarPedido();
+                EventBus.getDefault().post(new Total(String.valueOf(pedido.getTotal())));
             }
         });
     }

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,19 +21,33 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.adaptadores.CarritoComprasAdaptador;
+import com.sise.titulacion.anypsa.entidades.DetallePedido;
+import com.sise.titulacion.anypsa.entidades.Pedido;
+import com.sise.titulacion.anypsa.entidades.Total;
 import com.sise.titulacion.anypsa.utils.Constantes;
 import com.sise.titulacion.anypsa.utils.Estaticos;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class CarritoCompras extends Fragment {
+
+    public CarritoCompras(){}
+    Pedido pedido= Estaticos.cargarPedido();
     RecyclerView recyclerView;
     Button btnEnviarPedido;
+    CarritoComprasAdaptador catalogoAdapter;
+    TextView tvTotal;
+    ArrayList<DetallePedido> detallePedidos = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -43,7 +58,9 @@ public class CarritoCompras extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
         inicializarAdaptadorCarrritoCompras();
 
-        btnEnviarPedido =(Button) view.findViewById(R.id.button);
+        tvTotal = (TextView) view.findViewById(R.id.tvTotal);
+        tvTotal.setText(String.valueOf(pedido.getTotal()));
+        btnEnviarPedido = (Button) view.findViewById(R.id.button);
         btnEnviarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,60 +73,85 @@ public class CarritoCompras extends Fragment {
     }
 
     void inicializarAdaptadorCarrritoCompras() {
-        CarritoComprasAdaptador catalogoAdapter = new CarritoComprasAdaptador(Estaticos.carritoProductos);
+        catalogoAdapter = new CarritoComprasAdaptador(Estaticos.carritoProductos);
         recyclerView.setAdapter(catalogoAdapter);
+    }
+
+    public  void enviarPedido() {
+    pedido= Estaticos.cargarPedido();
+
+        if (pedido.getDetallePedido().size()>0) {
+            RequestQueue queue = Volley.newRequestQueue(getActivity());
+            final StringRequest jsonObjectRequest =
+                    new StringRequest(
+                            Request.Method.POST,
+                            Constantes.PEDIDO_PHP,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    try {
+                                        JSONObject jsonObject = new JSONObject(response);
+
+                                        //todo eliminar datos el la lista estatica
+
+                                        Estaticos.carritoProductos.clear();
+                                        catalogoAdapter.notifyDataSetChanged();
+                                        recyclerView.clearOnScrollListeners();
+                                        EventBus.getDefault().post(new Total("0.0"));
+
+                                        Snackbar.make(getView(), jsonObject.get("message").toString(), Snackbar.LENGTH_SHORT).show();
+                                        Log.d("tag", "onResponse-header: " + jsonObject.get("message").toString());
+                                        Log.d("tag", "onResponse-error: " + jsonObject.get("error").toString());
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                }
+                            }) {
+
+                        @Override
+                        protected Map<String, String> getParams() {
+
+                            Map<String, String> o = new HashMap<String, String>();
+                            o.put("action", "newpedido");
+                            o.put("cliente", "1");
+                            o.put("subtotal", String.valueOf(pedido.getSubtotal()));
+                            o.put("igv", String.valueOf(pedido.getIgv()));
+                            for (int i = 0; i < pedido.getDetallePedido().size(); i++) {
+                                DetallePedido d = pedido.getDetallePedido().get(i);
+                                o.put("productos[" + i + "][idproducto]", String.valueOf(d.getIdProducto()));
+                                o.put("productos[" + i + "][item]", String.valueOf(d.getItem()));
+                                o.put("productos[" + i + "][cantidad]", String.valueOf(d.getCantidad()));
+                                o.put("productos[" + i + "][precio]", String.valueOf(d.getPrecio()));
+                                o.put("productos[" + i + "][idcolor]", String.valueOf(d.getIdcolor()));
+                            }
+                            String s = String.valueOf(o);
+                            Log.d("tag", "getParams: " + s);
+                            return o;
+                        }
+                    };
+            queue.add(jsonObjectRequest);
+        }else{
+            Snackbar.make(getView()," No tiene productos para enviar", Snackbar.LENGTH_SHORT).show();
+        }
+
 
     }
-    public void enviarPedido() {
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
-        final StringRequest jsonObjectRequest =
-                new StringRequest(
-                        Request.Method.POST,
-                        Constantes.PEDIDO_PHP,
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                try {
-                                    JSONObject jsonObject = new JSONObject(response);
 
-                                //todo eliminar datos el la lista estatica
-                                    Snackbar.make(getView(), jsonObject.get("message").toString(), Snackbar.LENGTH_LONG).show();
-                                    Log.d("tag", "onResponse-header: "+jsonObject.get("message").toString());
-                                    Log.d("tag", "onResponse-error: "+jsonObject.get("error").toString());
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Total event) {
+        tvTotal.setText(event.total);
+    }
 
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-
-                            }
-                        },
-                        new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                            }
-                        }) {
-
-                    @Override
-                    protected Map<String, String> getParams() {
-
-                        Map<String, String> o = new HashMap<String, String>();
-                        o.put("action","newpedido");
-                        o.put("cliente", "1");
-                        o.put("subtotal", "999.99");
-                        o.put("igv", "000");
-                        for (int i = 0; i < Estaticos.carritoProductos.size(); i++) {
-                            o.put("productos["+i+"][idproducto]",String.valueOf(Estaticos.carritoProductos.get(i).getIdProducto()));
-                            o.put("productos["+i+"][item]",String.valueOf(i));
-                            o.put("productos["+i+"][cantidad]",String.valueOf(Estaticos.carritoProductos.get(i).getCantidad()));
-                            o.put("productos["+i+"][precio]",String.valueOf("50.0"));
-                            o.put("productos["+i+"][idcolor]",String.valueOf(Estaticos.carritoProductos.get(i).getColorId()));
-                        }
-
-                        String s = String.valueOf(o);
-                        Log.d("tag", "getParams: " + s);
-                        return o;
-                    }
-                };
-        queue.add(jsonObjectRequest);
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 }

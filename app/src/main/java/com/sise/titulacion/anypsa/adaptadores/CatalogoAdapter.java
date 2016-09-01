@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.entidades.Color;
 import com.sise.titulacion.anypsa.entidades.Mensajes;
+import com.sise.titulacion.anypsa.entidades.Pedido;
 import com.sise.titulacion.anypsa.entidades.Producto;
 import com.sise.titulacion.anypsa.utils.Estaticos;
 import com.squareup.picasso.Picasso;
@@ -77,13 +78,12 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
                             Color color = colors.get(i);
                             catalgoViewHolder.colorId = color.getIdColor();
                             catalgoViewHolder.ivColor.setBackgroundColor(android.graphics.Color.parseColor(color.getHexadecimal()));
-                            catalgoViewHolder.tvPrecio.setText("Precio: S/. " + color.getPrecio().toString());
-                            catalgoViewHolder.tvStock.setText("Stock : " + String.valueOf(color.getStock()));
+                            catalgoViewHolder.tvPrecio.setText(color.getPrecio().toString());
+                            catalgoViewHolder.tvStock.setText(String.valueOf(color.getStock()));
                             catalgoViewHolder.txtCantidad.setText("1");
                             producto.setColorId(color.getIdColor());
                         }
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
                     }
@@ -99,24 +99,21 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
                     boolean encontro = false;
                     for (int x = 0; x < Estaticos.carritoProductos.size(); x++) {
                         Producto productoExistente = Estaticos.carritoProductos.get(x);
-
+                        Pedido pedido= new Pedido();
                         if (productoExistente.getIdProducto() == producto.getIdProducto() && productoExistente.getColorId() == producto.getColorId()){
 
                             productoExistente.setCantidad(productoExistente.getCantidad()+Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
                             encontro = true;
                             Estaticos.carritoProductos.set(x, productoExistente);
-
                         }
                     }
                     if (encontro){
-
-                        Snackbar.make(view,"Se agrego "+catalgoViewHolder.txtCantidad.getText().toString()+" al producto existente", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(view,"Se agrego "+catalgoViewHolder.txtCantidad.getText().toString()+" al producto existente", Snackbar.LENGTH_SHORT).show();
                     }else {
-                        Producto itemProducto = new Producto();
+                        Producto itemProducto ;
                         producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
                         producto.setColorId(catalgoViewHolder.colorId);
                         itemProducto = producto;
-
                         Estaticos.carritoProductos.add(itemProducto);
                     }
                     EventBus.getDefault().post(new Mensajes("Ir a mis Compras (" + String.valueOf(Estaticos.carritoProductos.size()) + " Productos )"));

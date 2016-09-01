@@ -47,14 +47,13 @@ public class Catalogo extends Fragment {
             public void onClick(View view) {
                 if ((Estaticos.carritoProductos.size() > 0)) {
 
-
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     CarritoCompras carritoCompras = new CarritoCompras();
                     fragmentTransaction.replace(R.id.contenedor, carritoCompras).commit();
                     EventBus.getDefault().post(new Mensajes("Mi Lista de Compras"));
                 } else {
-                    Snackbar.make(view, "No tiene productos en su lista de compras", Snackbar.LENGTH_INDEFINITE).setAction("Ok", new View.OnClickListener() {
+                    Snackbar.make(view, "No tiene productos en su lista de compras", Snackbar.LENGTH_SHORT).setAction("Ok", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                         }
