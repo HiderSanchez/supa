@@ -24,8 +24,6 @@ import com.sise.titulacion.anypsa.utils.Estaticos;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -37,20 +35,23 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
     Button boton;
 
     ArrayList<Producto> productos = new ArrayList<>();
+
     public CatalogoAdapter(ArrayList<Producto> catalogo) {
         this.productos = catalogo;
     }
+
     @Override
     public CatalgoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_catalogo, parent, false);
 
         return new CatalgoViewHolder(v);
     }
+
     @Override
-    public void onBindViewHolder(final CatalgoViewHolder catalgoViewHolder, int position) {
+    public void onBindViewHolder( final CatalgoViewHolder catalgoViewHolder, final int position) {
         final Producto producto = productos.get(position);
 
-        Context context = catalgoViewHolder.ivFoto.getContext();
+        final Context context = catalgoViewHolder.ivFoto.getContext();
         Picasso.with(context).load(producto.getImagen()).into(catalgoViewHolder.ivFoto);
 
 
@@ -79,6 +80,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
                             catalgoViewHolder.tvPrecio.setText("Precio: S/. " + color.getPrecio().toString());
                             catalgoViewHolder.tvStock.setText("Stock : " + String.valueOf(color.getStock()));
                             catalgoViewHolder.txtCantidad.setText("1");
+                            producto.setColorId(color.getIdColor());
                         }
                     }
 
@@ -88,40 +90,43 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
                 }
         );
         catalgoViewHolder.ibComprar.setOnClickListener(new View.OnClickListener() {
-
-            @Subscribe(threadMode = ThreadMode.MAIN)
             @Override
             public void onClick(View view) {
 
                 if (!TextUtils.isEmpty(catalgoViewHolder.txtCantidad.getText().toString())) {
 
-                    Producto itemProducto;
-                    producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
-                    producto.setColorId(catalgoViewHolder.colorId);
-                    itemProducto=producto;
 
-                    for (int i = 0; i < Estaticos.carritoProductos.size(); i++) {
-                        int idPrdouctoOld= Estaticos.carritoProductos.get(i).getIdProducto();
-                        if (idPrdouctoOld == producto.getIdProducto()) {
-                          itemProducto.setCantidad(itemProducto.getCantidad()+Estaticos.carritoProductos.get(i).getCantidad());
-                            Snackbar.make(view, "Se agrego " + producto.getCantidad() + " al producto existente", Snackbar.LENGTH_LONG).show();
+                    boolean encontro = false;
+                    for (int x = 0; x < Estaticos.carritoProductos.size(); x++) {
+                        Producto productoExistente = Estaticos.carritoProductos.get(x);
+
+                        if (productoExistente.getIdProducto() == producto.getIdProducto() && productoExistente.getColorId() == producto.getColorId()){
+
+                            productoExistente.setCantidad(productoExistente.getCantidad()+Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
+                            encontro = true;
+                            Estaticos.carritoProductos.set(x, productoExistente);
+
                         }
                     }
-                    if (Estaticos.carritoProductos.contains(producto)) {
-                        int index = Estaticos.carritoProductos.indexOf(itemProducto);
-                        int cantidadOld = Estaticos.carritoProductos.get(index).getCantidad();
-                        Estaticos.carritoProductos.get(index).setCantidad(cantidadOld + producto.getCantidad());
-                    } else {
-                        Estaticos.carritoProductos.add(itemProducto);
-                        Snackbar.make(view, "Producto Agregado"+itemProducto.getIdProducto() , Snackbar.LENGTH_LONG).show();
-                    }
-                    EventBus.getDefault().post(new Mensajes("Ver mis Compras (" + String.valueOf(Estaticos.carritoProductos.size()) + " Productos )"));
+                    if (encontro){
 
+                        Snackbar.make(view,"Se agrego "+catalgoViewHolder.txtCantidad.getText().toString()+" al producto existente", Snackbar.LENGTH_LONG).show();
+                    }else {
+                        Producto itemProducto = new Producto();
+                        producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
+                        producto.setColorId(catalgoViewHolder.colorId);
+                        itemProducto = producto;
+
+                        Estaticos.carritoProductos.add(itemProducto);
+                    }
+                    EventBus.getDefault().post(new Mensajes("Ir a mis Compras (" + String.valueOf(Estaticos.carritoProductos.size()) + " Productos )"));
                 } else {
                     catalgoViewHolder.txtCantidad.setError("Ingrese la catidad a comprar");
                     catalgoViewHolder.txtCantidad.requestFocus();
 
                 }
+
+                Estaticos.carritoProductos.toArray();
             }
         });
     }

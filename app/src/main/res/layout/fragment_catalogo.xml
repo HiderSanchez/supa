@@ -1,8 +1,10 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_marginTop="?attr/actionBarSize"
+    android:orientation="vertical"
+    tools:context=".fragmentos.Catalogo">
 
 
     <android.support.v7.widget.RecyclerView
@@ -14,14 +16,13 @@
     </android.support.v7.widget.RecyclerView>
 
     <Button
+        android:id="@+id/btnProcesar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ir a mis compras"
-        android:id="@+id/btnProcesar"
-        android:padding="0dp"
+        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:background="@color/colorAccent"
-        android:layout_gravity="center_horizontal" />
+        android:text="Ir a mis compras" />
 
 
 </LinearLayout>

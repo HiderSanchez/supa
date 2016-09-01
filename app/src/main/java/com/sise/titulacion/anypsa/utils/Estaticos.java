@@ -15,4 +15,7 @@ public class Estaticos {
     public static ArrayList<DetallePedido> listaPedidos = new ArrayList<>();
 
     public  static ArrayList<Producto> carritoProductos = new ArrayList<>();
+
+    public static  ArrayList <DetallePedido> detallePedidos = new ArrayList<>();
+
 }

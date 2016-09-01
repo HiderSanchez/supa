@@ -1,67 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:orientation="vertical"
+    android:layout_marginTop="?attr/actionBarSize"
     tools:context=".fragmentos.CarritoCompras">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvCarrito"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
+        android:layout_height="match_parent"
+        android:background="@color/cardview_dark_background"
+        android:layout_weight="7"
+        />
 
 
     <LinearLayout
+        android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:orientation="vertical"
         android:layout_alignParentBottom="true"
-        android:orientation="vertical">
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/rvCarrito"
+        android:layout_weight="1"
+        android:layout_alignBottom="@+id/rvCarrito">
 
         <LinearLayout
+            android:id="@+id/resumen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            android:orientation="horizontal">
+            android:paddingRight="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:text="Total incluye Igv S/." />
+                    android:text="Total incluye Igv S/."
+                    android:textSize="20dp" />
+
                 <TextView
                     android:id="@+id/tvIgv"
                     android:layout_width="match_parent"
-                    android:textSize="20dp"
-                    android:textColor="@color/colorAccent"
-                    android:textStyle="bold"
                     android:layout_height="wrap_content"
-                    android:text="500.00" />
+                    android:text="500.00"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
 
 
-        <LinearLayout
+        <Button
+            android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <Button
-                android:id="@+id/button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:text="Enviar Pedido" />
-        </LinearLayout>
+            android:background="@color/colorAccent"
 
-
+            android:text="Enviar Pedido" />
     </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
