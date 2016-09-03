@@ -13,9 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.sise.titulacion.anypsa.EstadoCuenta;
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.fragmentos.Catalogo;
+import com.sise.titulacion.anypsa.fragmentos.EstadoCuenta;
 import com.sise.titulacion.anypsa.fragmentos.HistorialPedidos;
 
 public class MainActivity extends AppCompatActivity
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

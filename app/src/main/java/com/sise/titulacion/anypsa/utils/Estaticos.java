@@ -15,13 +15,13 @@ public class Estaticos {
 
     public static ArrayList<DetallePedido> listaPedidos = new ArrayList<>();
 
-    public  static ArrayList<Producto> carritoProductos = new ArrayList<>();
+    public static ArrayList<Producto> carritoProductos = new ArrayList<>();
     public static String idusuario;
 
 
     public static Pedido cargarPedido() {
-        Pedido pedido=new Pedido();
-        ArrayList <DetallePedido> detallePedidos = new ArrayList<>();
+        Pedido pedido = new Pedido();
+        ArrayList<DetallePedido> detallePedidos = new ArrayList<>();
         double total = 0;
         for (int i = 0; i < Estaticos.carritoProductos.size(); i++) {
             Producto producto = Estaticos.carritoProductos.get(i);
@@ -42,5 +42,4 @@ public class Estaticos {
         pedido.setTotal(total);
         return pedido;
     }
-
 }

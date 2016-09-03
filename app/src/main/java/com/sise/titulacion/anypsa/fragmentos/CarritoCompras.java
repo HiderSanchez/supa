@@ -161,4 +161,5 @@ public class CarritoCompras extends Fragment {
         super.onStart();
         EventBus.getDefault().register(this);
     }
+
 }

@@ -14,7 +14,7 @@
         <item
             android:id="@+id/informarpago"
             android:icon="@drawable/ic_information_pago"
-            android:title="Informar Pago" />
+            android:title="estado de Cuenta" />
         <item
             android:id="@+id/ayuda"
             android:icon="@drawable/ic_help"
