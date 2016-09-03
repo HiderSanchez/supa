@@ -1,5 +1,6 @@
 package com.sise.titulacion.anypsa.entidades;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 /**
@@ -25,7 +26,8 @@ public class Pedido {
     }
 
     public double getSubtotal() {
-        return subtotal;
+        DecimalFormat df = new DecimalFormat("###.00");
+        return   Double.valueOf(df.format(subtotal));
     }
 
     public void setSubtotal(double subtotal) {
@@ -33,7 +35,8 @@ public class Pedido {
     }
 
     public double getIgv() {
-        return igv;
+        DecimalFormat df = new DecimalFormat("###.00");
+        return   Double.valueOf(df.format(igv));
     }
 
     public void setIgv(double igv) {
@@ -41,7 +44,8 @@ public class Pedido {
     }
 
     public double getTotal() {
-        return total;
+        DecimalFormat df = new DecimalFormat("###.00");
+        return   Double.valueOf(df.format(total));
     }
 
     public void setTotal(double total) {

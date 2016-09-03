@@ -49,7 +49,7 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
     }
 
     @Override
-    public void onBindViewHolder( final CatalgoViewHolder catalgoViewHolder, final int position) {
+    public void onBindViewHolder(final CatalgoViewHolder catalgoViewHolder, final int position) {
         final Producto producto = productos.get(position);
 
         final Context context = catalgoViewHolder.ivFoto.getContext();
@@ -80,10 +80,11 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
                             catalgoViewHolder.ivColor.setBackgroundColor(android.graphics.Color.parseColor(color.getHexadecimal()));
                             catalgoViewHolder.tvPrecio.setText(color.getPrecio().toString());
                             catalgoViewHolder.tvStock.setText(String.valueOf(color.getStock()));
-                            catalgoViewHolder.txtCantidad.setText("1");
+                            // catalgoViewHolder.txtCantidad.setText("1");  todo modificacion
                             producto.setColorId(color.getIdColor());
                         }
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> adapterView) {
                     }
@@ -94,36 +95,48 @@ public class CatalogoAdapter extends RecyclerView.Adapter<CatalogoAdapter.Catalg
             public void onClick(View view) {
 
                 if (!TextUtils.isEmpty(catalgoViewHolder.txtCantidad.getText().toString())) {
+                    if (Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()) > 0) {
 
+                        if (Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()) <=
+                                Integer.parseInt(catalgoViewHolder.tvStock.getText().toString())) {
+                            boolean encontro = false;
+                            for (int x = 0; x < Estaticos.carritoProductos.size(); x++) {
+                                Producto productoExistente = Estaticos.carritoProductos.get(x);
+                                Pedido pedido = new Pedido();
+                                if (productoExistente.getIdProducto() == producto.getIdProducto() && productoExistente.getColorId() == producto.getColorId()) {
 
-                    boolean encontro = false;
-                    for (int x = 0; x < Estaticos.carritoProductos.size(); x++) {
-                        Producto productoExistente = Estaticos.carritoProductos.get(x);
-                        Pedido pedido= new Pedido();
-                        if (productoExistente.getIdProducto() == producto.getIdProducto() && productoExistente.getColorId() == producto.getColorId()){
+                                    productoExistente.setCantidad(productoExistente.getCantidad() + Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
+                                    encontro = true;
+                                    Estaticos.carritoProductos.set(x, productoExistente);
+                                }
+                            }
+                            if (encontro) {
+                                Snackbar.make(view, "Se agrego " + catalgoViewHolder.txtCantidad.getText().toString() + " al producto existente", Snackbar.LENGTH_SHORT).show();
+                            } else {
+                                Producto itemProducto;
+                                producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
+                                producto.setColorId(catalgoViewHolder.colorId);
+                                itemProducto = producto;
+                                Estaticos.carritoProductos.add(itemProducto);
+                                Snackbar.make(view, "Producto agregado", Snackbar.LENGTH_SHORT).show();
 
-                            productoExistente.setCantidad(productoExistente.getCantidad()+Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
-                            encontro = true;
-                            Estaticos.carritoProductos.set(x, productoExistente);
+                            }
+                            EventBus.getDefault().post(new Mensajes("Ir a mis Compras (" + String.valueOf(Estaticos.carritoProductos.size()) + " Productos )"));
+
+                        } else {
+                            catalgoViewHolder.txtCantidad.setError("Cantidad supera el stock");
+                            catalgoViewHolder.txtCantidad.setSelectAllOnFocus(true);
+                            catalgoViewHolder.txtCantidad.requestFocus();
                         }
+                    } else {
+                        catalgoViewHolder.txtCantidad.setError("Ingrese una cantidad mayor a 0");
+                        catalgoViewHolder.txtCantidad.setSelectAllOnFocus(true);
+                        catalgoViewHolder.txtCantidad.requestFocus();
                     }
-                    if (encontro){
-                        Snackbar.make(view,"Se agrego "+catalgoViewHolder.txtCantidad.getText().toString()+" al producto existente", Snackbar.LENGTH_SHORT).show();
-                    }else {
-                        Producto itemProducto ;
-                        producto.setCantidad(Integer.parseInt(catalgoViewHolder.txtCantidad.getText().toString()));
-                        producto.setColorId(catalgoViewHolder.colorId);
-                        itemProducto = producto;
-                        Estaticos.carritoProductos.add(itemProducto);
-                    }
-                    EventBus.getDefault().post(new Mensajes("Ir a mis Compras (" + String.valueOf(Estaticos.carritoProductos.size()) + " Productos )"));
                 } else {
                     catalgoViewHolder.txtCantidad.setError("Ingrese la catidad a comprar");
                     catalgoViewHolder.txtCantidad.requestFocus();
-
                 }
-
-                Estaticos.carritoProductos.toArray();
             }
         });
     }

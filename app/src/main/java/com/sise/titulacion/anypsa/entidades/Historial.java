@@ -4,6 +4,7 @@ package com.sise.titulacion.anypsa.entidades;
 import android.util.Log;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +33,6 @@ public class Historial {
     public Historial() {
 
     }
-
     public int getIdPedido() {
         return idPedido;
     }
@@ -58,7 +58,9 @@ public class Historial {
     }
 
     public double getSubTotal() {
-        return subTotal;
+
+        DecimalFormat df = new DecimalFormat("###.00");
+        return   Double.valueOf(df.format(subTotal));
     }
 
     public void setSubTotal(double subTotal) {
@@ -66,7 +68,9 @@ public class Historial {
     }
 
     public double getIgv() {
-        return igv;
+
+        DecimalFormat df = new DecimalFormat("###.00");
+        return   Double.valueOf(df.format(igv));
     }
 
     public void setIgv(double igv) {

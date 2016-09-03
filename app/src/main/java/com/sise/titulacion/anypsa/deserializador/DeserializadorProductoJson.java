@@ -32,7 +32,6 @@ public class DeserializadorProductoJson implements JsonDeserializer<ProductoResp
        //almaceno los datos en los pojos
         productoResponse.setProductos(deserializarContactodeJson(productosResponseData));
 
-
         return productoResponse;
     }
     private ArrayList<Producto> deserializarContactodeJson(JsonArray jsonArray){

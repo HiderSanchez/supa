@@ -24,6 +24,7 @@ import com.sise.titulacion.anypsa.adaptadores.HistorialAdapter;
 import com.sise.titulacion.anypsa.controladores.HistorialResponse;
 import com.sise.titulacion.anypsa.deserializador.DeserializadorHistorial;
 import com.sise.titulacion.anypsa.utils.Constantes;
+import com.sise.titulacion.anypsa.utils.Estaticos;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,7 +96,7 @@ public class HistorialPedidos extends Fragment {
                     protected Map<String, String> getParams() {
                         Map<String, String> headers = new HashMap<String, String>();
                         headers.put("action", "listpedidos");
-                        headers.put("idcliente", "1");
+                        headers.put("idcliente", Estaticos.idusuario);
                         return headers;
                     }
                 };

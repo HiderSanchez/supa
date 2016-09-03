@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /**
@@ -67,6 +68,11 @@ public class CarritoComprasAdaptador extends RecyclerView.Adapter<CarritoCompras
         }
         pedidoViewHolder.txtPrecio.setText("Precio : "+color.getPrecio().toString());
         pedidoViewHolder.txtCantidad.setText("Cantidad : "+String.valueOf( producto.getCantidad()));
+
+        DecimalFormat df= new DecimalFormat("#0.00");
+        pedidoViewHolder.tvImporte.setText(String.valueOf(df.format(color.getPrecio()*producto.getCantidad())));
+
+
       //  pedidoViewHolder.txtStock.setText("Stock : "+String.valueOf(color.getStock()));
         pedidoViewHolder.txtColor.setBackgroundColor(android.graphics.Color.parseColor(color.getHexadecimal()));
 
@@ -104,7 +110,7 @@ public class CarritoComprasAdaptador extends RecyclerView.Adapter<CarritoCompras
         private TextView txtCantidad;
         private ImageButton btnComprar;
         private ImageButton btnEliminar;
-
+        public TextView tvImporte;
 
 
         public PedidoViewHolder(View itemView) {
@@ -120,6 +126,7 @@ public class CarritoComprasAdaptador extends RecyclerView.Adapter<CarritoCompras
         //    btnComprar = (ImageButton) itemView.findViewById(R.id.btnComprar);
             btnEliminar = (ImageButton) itemView.findViewById(R.id.ibEliminar);
         //    cmbColor = (Spinner) itemView.findViewById(R.id.spinnerColores);
+            tvImporte = (TextView) itemView.findViewById(R.id.tvImporte);
 
         }
     }

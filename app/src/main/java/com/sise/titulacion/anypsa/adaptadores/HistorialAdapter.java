@@ -2,19 +2,16 @@ package com.sise.titulacion.anypsa.adaptadores;
 
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.entidades.Historial;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by hider on 25/08/16.
@@ -43,7 +40,9 @@ public class HistorialAdapter extends RecyclerView.Adapter<HistorialAdapter.Hist
         historialViewHolder.tvFechaEntrega.setText(historial.getFechaEntrega());
         historialViewHolder.tvFechaPedido.setText(historial.getFechaPedido());
         historialViewHolder.tvIdPedido.setText(String.valueOf("Pedido N° : " + historial.getIdPedido()));
-        historialViewHolder.tvMonto.setText(String.valueOf(historial.getIgv() + historial.getSubTotal()));
+
+        DecimalFormat df = new DecimalFormat("###.00");
+        historialViewHolder.tvMonto.setText(String.valueOf( Double.valueOf(df.format(historial.getIgv() + historial.getSubTotal()))));
         historialViewHolder.tvPagado.setText(historial.getPagado());
 
         historialViewHolder.layout.setBackgroundColor(android.graphics.Color.parseColor(historial.pintarEstadoPedido()));

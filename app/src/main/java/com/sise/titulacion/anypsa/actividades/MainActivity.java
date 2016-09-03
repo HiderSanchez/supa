@@ -13,10 +13,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.sise.titulacion.anypsa.EstadoCuenta;
 import com.sise.titulacion.anypsa.R;
 import com.sise.titulacion.anypsa.fragmentos.Catalogo;
 import com.sise.titulacion.anypsa.fragmentos.HistorialPedidos;
-import com.sise.titulacion.anypsa.utils.Estaticos;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tvIdUsuario= (TextView) findViewById(R.id.tvNueroCliente);
-        tvUsuario= (TextView) findViewById(R.id.tvNombreUsuario);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -95,10 +93,14 @@ public class MainActivity extends AppCompatActivity
 
             FragmentManager fragmentManager = getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            HistorialPedidos catalogo = new HistorialPedidos();
-            fragmentTransaction.replace(R.id.contenedor, catalogo).commit();
+            HistorialPedidos historialPedidos = new HistorialPedidos();
+            fragmentTransaction.replace(R.id.contenedor, historialPedidos).commit();
             toolbar.setTitle("Historial de Pedidos");
         } else if (id == R.id.informarpago) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            EstadoCuenta estadoCuenta = new EstadoCuenta();
+            fragmentTransaction.replace(R.id.contenedor, estadoCuenta).commit();
         } else if (id == R.id.ayuda) {
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -1,5 +1,7 @@
 package com.sise.titulacion.anypsa.entidades;
 
+import java.text.DecimalFormat;
+
 public class DetallePedido {
     private int idcolor;
     private int idProducto;
@@ -43,7 +45,8 @@ public class DetallePedido {
     }
 
     public double getPrecio() {
-        return precio;
+        DecimalFormat df = new DecimalFormat("###.00");
+        return   Double.valueOf(df.format(precio));
     }
 
     public void setPrecio(double precio) {

@@ -35,17 +35,17 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class Catalogo extends Fragment {
     RecyclerView recyclerView;
-    Button button;
+    Button btnMisCompras;
     String idusuario;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_activity_catalogo, container, false);
-        button = (Button) view.findViewById(R.id.btnMisCompras);
+        btnMisCompras = (Button) view.findViewById(R.id.btnMisCompras);
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        btnMisCompras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if ((Estaticos.carritoProductos.size() > 0)) {
@@ -106,10 +106,9 @@ public class Catalogo extends Fragment {
                         });
         queue.add(jsonObjectRequest);
     }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(Mensajes event) {
-        button.setText(event.mensaje);
+        btnMisCompras.setText(event.mensaje);
     }
 
     @Override

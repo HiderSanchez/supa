@@ -1,5 +1,6 @@
 package com.sise.titulacion.anypsa.fragmentos;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -20,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sise.titulacion.anypsa.R;
+import com.sise.titulacion.anypsa.actividades.MainActivity;
 import com.sise.titulacion.anypsa.adaptadores.CarritoComprasAdaptador;
 import com.sise.titulacion.anypsa.entidades.DetallePedido;
 import com.sise.titulacion.anypsa.entidades.Pedido;
@@ -49,6 +51,8 @@ public class CarritoCompras extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layout_carrito_compras, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.rvCarrito);
+
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -87,7 +91,6 @@ public class CarritoCompras extends Fragment {
                                     try {
                                         JSONObject jsonObject = new JSONObject(response);
 
-                                        //todo eliminar datos el la lista estatica
 
                                         Estaticos.carritoProductos.clear();
                                         catalogoAdapter.notifyDataSetChanged();
@@ -97,6 +100,15 @@ public class CarritoCompras extends Fragment {
                                         Snackbar.make(getView(), jsonObject.get("message").toString(), Snackbar.LENGTH_SHORT).show();
                                         Log.d("tag", "onResponse-header: " + jsonObject.get("message").toString());
                                         Log.d("tag", "onResponse-error: " + jsonObject.get("error").toString());
+
+
+
+                                    /*    FragmentManager fragmentManager = getFragmentManager();
+                                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                                        Catalogo catalogo= new Catalogo();
+                                        fragmentTransaction.replace(R.id.contenedor, catalogo).commit();*/
+                                        Intent intent = new Intent(getContext(), MainActivity.class);
+                                        startActivity(intent);
 
                                     } catch (JSONException e) {
                                         e.printStackTrace();
