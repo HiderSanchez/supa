@@ -2,14 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <!--item
-            android:id="@+id/solicitarregistro"
-            android:icon="@drawable/ic_person_add"
-            android:title="Solicitar Registro" />
-        <item
-            android:id="@+id/iniciarsesion"
-            android:icon="@drawable/ic_sesion"
-            android:title="Iniciar Sesion" /-->
+
         <item
             android:id="@+id/solicitarpedido"
             android:icon="@drawable/ic_shopping_cart"
@@ -27,18 +20,5 @@
             android:icon="@drawable/ic_help"
             android:title="Ayuda" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
-        </menu>
-    </item>
 
 </menu>
