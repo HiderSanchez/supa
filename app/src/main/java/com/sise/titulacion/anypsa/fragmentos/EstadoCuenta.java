@@ -54,7 +54,7 @@ public class EstadoCuenta extends Fragment {
         tvPeriodoFacturacion= (TextView) view.findViewById(R.id.tvPeriodoFacturacion);
         tvRucCliente= (TextView) view.findViewById(R.id.tvRuc);
 
-
+//            consultar();
 
         return view;
     }
@@ -64,7 +64,7 @@ public class EstadoCuenta extends Fragment {
         StringRequest jsonObjectRequest =
                 new StringRequest(
                         Request.Method.POST,
-                        Constantes.login,
+                        Constantes.PEDIDO_PHP,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
